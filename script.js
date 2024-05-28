@@ -1,55 +1,155 @@
-console.log("test");
-let canva = document.querySelector("#canvas");
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+     
+
+let canvas = document.querySelector('#canvas');
+var ctx = canvas.getContext('2d');
+var punkty = document.querySelector('.punkty-js');
+var punktyLiczba = 0;
+punkty.innerHTML = punktyLiczba;
+
+var rectX = 0;
+var rectY = 0;
+var rectWidth = 50;
+var rectHeight = 50;
+var speed = 50;
+
+var szerokosc_1 = getRandomInt (24)*50;
+var wysokosc_1 = getRandomInt (13)*50;
+
+var szerokosc_2 = getRandomInt (24)*50;
+var wysokosc_2 = getRandomInt (13)*50;
+
+var pierwszy_pkt = false;
+var drugi_pkt = false;
 
 
-let ctx = canva.getContext('2d');
-ctx.fillStyle = "black";
-ctx.fillRect(50,5,250,400);
-console.log(canva);
 
 
-ctx.fillStyle = "grey";
-ctx.fillRect(65,40,200,200);
 
 
-ctx.beginPath();
-ctx.fillStyle = "#C7C7C7";
-ctx.arc(500,300, 60,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+function drawRect() {
 
-ctx.beginPath();
-ctx.fillStyle = "#CECECE";
-ctx.arc(500,200, 50,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!pierwszy_pkt){
+        ctx.fillStyle = "green"; 
+        ctx.fillRect(szerokosc_1, wysokosc_1, rectWidth, rectHeight);
+    }
+    if (!drugi_pkt){
+        ctx.fillStyle = "green"; 
+        ctx.fillRect(szerokosc_2, wysokosc_2, rectWidth, rectHeight);
+    }
+    ctx.fillStyle = "blue"; 
+    ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
 
-ctx.beginPath();
-ctx.fillStyle = "#DFDEDE";
-ctx.arc(500,130, 40,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+    
 
-ctx.beginPath();
-ctx.fillStyle = "black";
-ctx.arc(470,120, 6,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+    // link.onload = function(){
 
-ctx.beginPath();
-ctx.fillStyle = "black";
-ctx.arc(500,120, 6,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+    //     ctx.drawImage(link, rectX, rectY, rectWidth, rectHeight);
 
-ctx.beginPath();
-ctx.fillStyle = "grey";
-ctx.fillRect(1,100000, 10,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+    // }
 
-ctx.beginPath();
-ctx.fillStyle = "lightblue";
-ctx.arc(700,120, 60,0 , Math.PI*2);
-ctx.fill();
-ctx.closePath();
+}
+
+
+
+
+function checkBounds() {
+
+    if (rectX < 0) rectX = 0;
+    if (rectX + rectWidth > canvas.width) rectX = canvas.width - rectWidth;
+    if (rectY < 0) rectY = 0;
+    if (rectY + rectHeight > canvas.height) rectY = canvas.height - rectHeight;
+
+}
+
+
+function checkPunkty(){
+
+    if( rectX == szerokosc_1  && rectY==wysokosc_1 && !pierwszy_pkt){
+
+        console.log("Punkt");
+        
+        punktyLiczba++;
+        punkty.innerHTML = punktyLiczba;
+        // pierwszy_pkt = true;
+        szerokosc_1 = getRandomInt (24)*50;
+        wysokosc_1 = getRandomInt (13)*50;
+        console.log(wysokosc_1,szerokosc_1)
+
+
+
+    }else if (rectX == szerokosc_2 && rectY == wysokosc_2 && !drugi_pkt){
+
+        console.log("Punkt");
+
+        punktyLiczba++;
+
+        punkty.innerHTML = punktyLiczba;
+        // drugi_pkt = true;
+        szerokosc_2 = getRandomInt (24)*50;
+        wysokosc_2 = getRandomInt (13)*50;
+        console.log(wysokosc_2,szerokosc_2)
+
+
+
+    }
+
+}
+
+
+
+
+
+
+window.addEventListener('keydown', function (event) {
+
+    switch (event.key) {
+
+        case 'ArrowLeft':
+            rectX -= speed;
+            break;
+        case 'ArrowRight':
+            rectX += speed;
+            break;
+        case 'ArrowUp':
+            rectY -= speed;
+            break;
+        case 'ArrowDown':
+            rectY += speed;
+            break;
+
+    }
+
+    checkBounds(); 
+    checkPunkty();
+    drawRect(); 
+
+    
+
+});
+
+
+
+
+// drawRect();
+
+
+
+
+
+
+// var link = new Image();
+
+// link.src = './link.jpg';
+
+
+// link.onload = function(){
+
+//     ctx.drawImage(link, 50, 50);
+
+// }
+
+drawRect();
