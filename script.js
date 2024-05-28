@@ -6,11 +6,16 @@ function getRandomInt(max) {
 let canvas = document.querySelector('#canvas');
 var ctx = canvas.getContext('2d');
 var punkty = document.querySelector('.punkty-js');
+
 var live = document.querySelector('.live-js');
-var liveLiczba = 3;
+let startowaLiczbaLive = 3;
+var liveLiczba = startowaLiczbaLive;
 console.log(live)
+let punktyWygrana = 20;
+
 var punktyLiczba = 0;
 punkty.innerHTML = punktyLiczba;
+
 
 var rectX = 0;
 var rectY = 0;
@@ -41,7 +46,7 @@ function drawRect() {
     }
     if (!drugi_pkt){
         ctx.fillStyle = "red"; 
-        ctx.fillRect(szerokosc_2, wysokosc_2, rectWidth, rectHeight);
+        ctx.fillRect(szerokosc_2, wysokosc_2, rectWidth +100, rectHeight+150);
     }
     ctx.fillStyle = "blue"; 
     ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
@@ -103,7 +108,7 @@ function checkPunkty(){
 }
 
 function checkWygrana(){
-    if (punktyLiczba === 3){
+    if (punktyLiczba === punktyWygrana){
         ctx.clearRect(0,0,canvas.width, canvas.height)
         punkty.innerHTML = "wygrana";
         ctx.font = '100px Arial'
@@ -155,7 +160,7 @@ window.addEventListener('keydown', function (event) {
     checkPunkty();
     checkPrzegrana();
     checkWygrana();
-if(punktyLiczba===3 || liveLiczba ===0){
+if(punktyLiczba=== punktyWygrana || liveLiczba ===0){
 
 }else{
     drawRect(); 
