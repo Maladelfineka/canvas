@@ -6,6 +6,9 @@ function getRandomInt(max) {
 let canvas = document.querySelector('#canvas');
 var ctx = canvas.getContext('2d');
 var punkty = document.querySelector('.punkty-js');
+var live = document.querySelector('.live-js');
+var liveLiczba = 3;
+console.log(live)
 var punktyLiczba = 0;
 punkty.innerHTML = punktyLiczba;
 
@@ -37,7 +40,7 @@ function drawRect() {
         ctx.fillRect(szerokosc_1, wysokosc_1, rectWidth, rectHeight);
     }
     if (!drugi_pkt){
-        ctx.fillStyle = "green"; 
+        ctx.fillStyle = "red"; 
         ctx.fillRect(szerokosc_2, wysokosc_2, rectWidth, rectHeight);
     }
     ctx.fillStyle = "blue"; 
@@ -85,9 +88,9 @@ function checkPunkty(){
 
         console.log("Punkt");
 
-        punktyLiczba++;
+        liveLiczba --;
 
-        punkty.innerHTML = punktyLiczba;
+        live.innerHTML = liveLiczba;
         // drugi_pkt = true;
         szerokosc_2 = getRandomInt (24)*50;
         wysokosc_2 = getRandomInt (13)*50;
@@ -99,8 +102,33 @@ function checkPunkty(){
 
 }
 
+function checkWygrana(){
+    if (punktyLiczba === 3){
+        ctx.clearRect(0,0,canvas.width, canvas.height)
+        punkty.innerHTML = "wygrana";
+        ctx.font = '100px Arial'
+        ctx.fillStyle = 'green'
 
+        var text = "Wygrana"
+        var x = (canvas.width / 2) - (ctx.measureText(text).width/2)
+        var y = canvas.height /2;
+        ctx.fillText(text, x,y)
+    }
+}
 
+function checkPrzegrana(){
+    if (liveLiczba === 0){
+        ctx.clearRect(0,0,canvas.width, canvas.height)
+
+        ctx.font = '100px Arial'
+        ctx.fillStyle = 'red'
+
+        var text = "Przegrana"
+        var x = (canvas.width / 2) - (ctx.measureText(text).width/2)
+        var y = canvas.height /2;
+        ctx.fillText(text, x,y)
+    }
+}
 
 
 
@@ -125,7 +153,14 @@ window.addEventListener('keydown', function (event) {
 
     checkBounds(); 
     checkPunkty();
+    checkPrzegrana();
+    checkWygrana();
+if(punktyLiczba===3 || liveLiczba ===0){
+
+}else{
     drawRect(); 
+}
+    
 
     
 
@@ -153,3 +188,4 @@ window.addEventListener('keydown', function (event) {
 // }
 
 drawRect();
+// 262 12
