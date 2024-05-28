@@ -110,7 +110,7 @@ function checkPunkty(){
 function checkWygrana(){
     if (punktyLiczba === punktyWygrana){
         ctx.clearRect(0,0,canvas.width, canvas.height)
-        punkty.innerHTML = "wygrana";
+
         ctx.font = '100px Arial'
         ctx.fillStyle = 'green'
 
